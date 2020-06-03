@@ -1,16 +1,9 @@
 import express from 'express';
-import bodyParser from 'body-parser';
-import { graphqlExpress } from 'apollo-server-express';
-import { makeExecutableSchema } from 'graphql-tools';
 import { ApolloServer } from 'apollo-server-express'
 
 import typeDefs from './schema';
 import resolvers from './resolvers';
-
-const schema = makeExecutableSchema({
-    typeDefs,
-    resolvers
-});
+import models from './models'
 
 const app = express();
 
@@ -26,7 +19,10 @@ app.get('/hello',(req, res) => {
     res.send("helljklj")
 })
 
-app.listen(4000,() => {
-    console.log("lsdkfj")
-});
+models.sequelize.sync().then(res => {
+    app.listen(4000,() => {
+        console.log("server started!")
+    });
+})
+
 
