@@ -11,9 +11,12 @@ const app = express();
 const SERVER = new ApolloServer({
     typeDefs,
     resolvers,
+    context: {models}
 })
 
 SERVER.applyMiddleware({app})
+
+app.use("/uploads", express.static("uploads"));
 
 app.get('/hello',(req, res) => {
     res.send("helljklj")

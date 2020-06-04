@@ -1,15 +1,39 @@
 import {gql} from 'apollo-server-express';
 
 const TYPEDEFS = gql`
-
-    type Query {
-        test_query: String
+    type User {
+        id: Int!
+        name: String
+        phone: Int!
+        email: String
+        address: String
+        zipCode: Int
+        imgUrl: String!
     }
 
-    type Test {
-        test_field_1: String,
-        test_field_2: Int,
-        test_field_3: Boolean,
+    type File {
+        filename: String!
+        mimetype: String!
+        encoding: String!
+    }
+
+
+
+    type Query {
+        getUser(id: Int!): User
+        uploads: [File]
+    }
+
+    type Mutation{
+        createUser(
+            name: String, 
+            email: String,
+            phone: Int!,
+            address: String,
+            zipCode:Int,
+            imgUrl: String!) : User,
+        
+        singleUpload(file: Upload!): File!
     }
 `
 
